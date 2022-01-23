@@ -72,7 +72,32 @@
 // }
 // console.log(foo);
 
-if (true) {
-  let foo = "foo";
-}
-console.log(foo);
+// if (true) {
+//   let foo = "foo";
+// }
+// console.log(foo);
+
+let fName = "singh";
+
+let user = {
+  name: "Arminder",
+  age: 34,
+  "school name": "MSP",
+  [fName]: fName
+};
+
+// let anotherUser = user;
+// anotherUser.name = "anotherName";
+// let anotherUser = {};
+
+// for (let key in user) {
+//   anotherUser[key] = user[key];
+// }
+
+//Second Way to Clone
+// let anotherUser = { ...user };
+
+// Third way
+let anotherUser = Object.assign({}, user);
+
+anotherUser.name = "anotherName";
