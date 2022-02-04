@@ -112,3 +112,41 @@
 // let b = new B();
 
 // alert(a == b); // true
+
+// Understand this Keyword
+// Rule No - 1 - default binding
+// function foo() {
+//   console.log(this);
+// }
+// foo(); //this -> GLobal Object in non strict mode, undefined - strict mode
+
+// // Rule Number - 2 Implicit Binding
+// let user = {
+//   name: "Kyle",
+//   foo: foo
+// };
+// // user.foo(); // this -> user
+
+// let anotherFoo = user.foo; // this -> Global Object
+// anotherFoo(); // The Thing matter how function is called
+
+// *****
+// Tricky Examples
+// *****
+// var foo = (function() {
+//   var o = {
+//     bar: "bar"
+//   };
+//   return { obj: o };
+// })();
+
+// console.log(foo.obj.bar)
+
+var foo = (function() {
+  let o = {
+    bar: "bar"
+  };
+  return { obj: o };
+})();
+
+console.log(foo.obj.bar);
