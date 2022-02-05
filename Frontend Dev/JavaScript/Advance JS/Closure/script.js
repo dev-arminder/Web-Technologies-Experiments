@@ -28,12 +28,54 @@
 // };
 
 // console.log(obj.__proto__);
+// let animal = {
+//   eat: true
+// };
+
+// let rabbit = {
+//   jump: true
+// };
+
+// rabbit.__proto__ = animal;
+
+// Simple Setting up Property
+// rabbit.eat = true;
+
 let animal = {
-  eat: true
+  isWalking: false,
+  isEating: false,
+  makeWalk() {
+    this.isWalking = true;
+  },
+  startEating() {
+    this.isEating = true;
+  }
 };
 
 let rabbit = {
-  jump: true
+  __proto__: animal
 };
 
-rabbit.__proto__ = animal;
+// let cat = {
+//   __proto__: animal
+// };
+
+// console.log(animal);
+// console.log(rabbit);
+// console.log(cat);
+
+// rabbit.startEating();
+// console.log(animal);
+// console.log(rabbit);
+// console.log(cat);
+
+// cat.makeWalk();
+// console.log(animal);
+// console.log(rabbit);
+// console.log(cat);
+
+// Problem with for...in loop
+for (let key in rabbit) {
+  console.log(key);
+}
+console.log(Object.keys(rabbit));
