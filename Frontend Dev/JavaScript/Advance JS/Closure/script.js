@@ -134,4 +134,4 @@
 let emptyObj = Object.create(null);
 console.log(Object.getPrototypeOf(emptyObj)); //Null
 
-Object.setPrototypeOf(emptyObj, Array.prototype);
+Object.setPrototypeOf(emptyObj, Object.prototype);
