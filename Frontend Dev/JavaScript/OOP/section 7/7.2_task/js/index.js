@@ -7,9 +7,11 @@ function Item() {
 }
 
 function ElectronicItem(name) {
-  this.name = name;
   Item.call(this);
+  this.name = name;
 }
+
+ElectronicItem.prototype = Object.getPrototypeOf(Item);
 
 const iphone = new ElectronicItem("iPhone");
 const galaxyWatch = new ElectronicItem("Galaxy Watch");
