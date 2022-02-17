@@ -130,15 +130,17 @@
 //   });
 
 // Promise.any()
-let promise = Promise.any([
-  new Promise((resolve, reject) => setTimeout(() => reject(1), 0)),
-  new Promise((resolve, reject) => setTimeout(() => reject(2), 2000)),
-  new Promise((resolve, reject) => setTimeout(() => resolve(3), 3000))
-]);
-promise
-  .then(result => {
-    console.log(result);
-  })
-  .catch(result => {
-    console.log(result);
-  });
+// let promise = Promise.any([
+//   new Promise((resolve, reject) => setTimeout(() => reject(1), 0)),
+//   new Promise((resolve, reject) => setTimeout(() => reject(2), 2000)),
+//   new Promise((resolve, reject) => setTimeout(() => resolve(3), 3000))
+// ]);
+// promise
+//   .then(result => {
+//     console.log(result);
+//   })
+//   .catch(result => {
+//     console.log(result);
+//   });
+
+// Promosification
