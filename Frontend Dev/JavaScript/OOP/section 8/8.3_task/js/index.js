@@ -19,90 +19,49 @@ madMax3.getAllParts(); // prints "Mad Max I" "Mad Max II" "Mad Max III"
 
 2. How such a data structure is called?
 */
+
 function Movie(movieLength, fullTitle, ageCategory) {
   if (new.target === undefined) {
     this.movieLength = movieLength;
     this.fullTitle = fullTitle;
     this.ageCategory = ageCategory;
+    this.prequel = null;
+    this.sequel = null;
   }
 }
+
 Movie.prototype.addPrequel = function(movie) {
-  const targetObj = {
-    prequel: movie.fullTitle,
-    name: this.fullTitle,
-    sequel: null
-  };
-  const obj = {
-    prequel: null,
-    name: movie.fullTitle,
-    sequel: this.fullTitle
-  };
-  if (this.movies.length === 0) {
-    this.movies.push(targetObj);
-    this.movies.push(obj);
-  } else {
-    for (let key in this.movies) {
-      if (this.movies.name === targetObj.name) {
-        //   If Movie Already Exist
-        //  FInd index and Add new Movie After that
-        this.movies.splice(key, 0, obj);
-      } else {
-        //   If Movie doesn'e exist
-        //   First push target movie then Object
-        this.movies.push(targetObj);
-        this.movies.push(obj);
-      }
-    }
-  }
+  this.prequel = movie;
+  movie.sequel = this;
 };
+
 Movie.prototype.addSequel = function(movie) {
-  const targetObj = {
-    prequel: movie.fullTitle,
-    name: this.fullTitle,
-    sequel: null
-  };
-  const obj = {
-    prequel: null,
-    name: movie.fullTitle,
-    sequel: this.fullTitle
-  };
-  if (this.movies.length === 0) {
-    this.movies.push(obj);
-    this.movies.push(targetObj);
-  } else {
-    for (let key in this.movies) {
-      if (this.movies.name === targetObj.name) {
-        //   If Movie Already Exist
-        //  FInd index and Add new Movie After that
-        if (key === 0) {
-          this.movies.unshift(obj);
-        } else {
-          this.movies.splice(key - 1, 0, obj);
-        }
-      } else {
-        //   If Movie doesn'e exist
-        //   First push target movie then Object
-        this.movies.push(obj);
-        this.movies.push(targetObj);
-      }
+  this.sequel = movie;
+  movie.prequel = this;
+};
+
+Movie.prototype.getAllParts = function() {
+  // If method is called upon first object
+  if (this.prequel === null) {
+    while (this.sequel !== null) {
+      console.log(this.fullTitle);
     }
   }
+
+  //  If method is called upon last object
+
+  // If method is called on in between object
 };
-Movie.prototype.getAllParts = function() {};
 
 function ActionMovie(movieLength, fullTitle, ageCategory) {
   Movie.call(this, movieLength, fullTitle, ageCategory);
 }
-ActionMovie.prototype = Movie.prototype;
-ActionMovie.prototype.constructor = ActionMovie;
-ActionMovie.prototype.movies = [];
+ActionMovie.prototype.__proto__ = Movie.prototype;
 
 function DramaMovie(movieLength, fullTitle, ageCategory) {
   Movie.call(this, movieLength, fullTitle, ageCategory);
 }
-DramaMovie.prototype = Movie.prototype;
-DramaMovie.prototype.constructor = DramaMovie;
-DramaMovie.prototype.movies = [];
+DramaMovie.prototype.__proto__ = Movie.prototype;
 
 const requiemForADream = new DramaMovie(80, "Requiem For A Dream", 18);
 const madMax = new ActionMovie(90, "Mad Max I", 16);
@@ -111,3 +70,5 @@ madMax2.addPrequel(madMax);
 
 const madMax3 = new ActionMovie(110, "Mad Max III", 16);
 madMax2.addSequel(madMax3);
+
+madMax.getAllParts();
