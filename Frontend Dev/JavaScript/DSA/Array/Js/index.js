@@ -11,3 +11,13 @@ function basic() {
 }
 
 // Insertion
+function Insertion() {
+  const arr = [1, 2, 3];
+  arr.push(4);
+  arr.pop();
+
+  arr.unshift(0);
+  arr.shift();
+
+  arr.splice(1, 0, 1.5);
+}

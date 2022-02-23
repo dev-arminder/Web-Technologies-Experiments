@@ -116,3 +116,6 @@ class User {
 Object.assign(User.prototype, eventMixin);
 
 let user = new User();
+user.on("login", function handleUserLogin() {
+  alert("I had handled that");
+});
