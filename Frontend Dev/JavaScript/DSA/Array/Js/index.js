@@ -117,4 +117,61 @@ function LargestSumSubArray() {
   console.log(largestSum);
 }
 
-LargestSumSubArray();
+function PascalTraingle(n) {
+  let arr = [];
+  if (n === 1) {
+    arr = [[1]];
+  }
+  if (n === 2) {
+    arr = [[1], [1, 1]];
+  } else if (n > 2) {
+    arr = [[1], [1, 1]];
+
+    for (let i = 3; i < n + 1; i++) {
+      let row = [1];
+      for (let j = 1; j < i - 1; j++) {
+        row.push(arr[i - 2][j - 1] + arr[i - 2][j]);
+      }
+      row.push(1);
+      arr.push(row);
+    }
+  }
+  return arr;
+}
+
+function NumJewelsInStones(jewels, stones) {
+  let jewelsObj = {};
+  let num = 0;
+  for (let i = 0; i < jewels.length; i++) {
+    if (jewelsObj[jewels[i]] !== undefined) {
+      jewelsObj[jewels[i]] += 1;
+    } else {
+      jewelsObj[jewels[i]] = 1;
+    }
+  }
+  for (let i = 0; i < stones.length; i++) {
+    if (jewelsObj[stones[i]] !== undefined) {
+      num += 1;
+    }
+  }
+
+  return num;
+}
+
+function KidsWithCandy(candies, extraCandies) {
+  let booleanArr = [];
+  let maxCandies = candies[i];
+
+  // Finding maximum Candy from Arr
+  for (let i = 1; i < candies.length; i++) {
+    if (candies[i] > maxCandies) maxCandies = candies[i];
+  }
+
+  for (let i = 0; i < candies.length; i++) {
+    if (candies[i] + extraCandies >= maxCandies) {
+      booleanArr.push(true);
+    } else booleanArr.push(false);
+  }
+
+  return booleanArr;
+}
