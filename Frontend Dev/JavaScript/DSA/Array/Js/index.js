@@ -307,40 +307,117 @@ function longestSubstringWithKdistinct(str, k) {
 }
 
 function totalFruit(fruits) {
+  // Optimized Approch
+  let basketA = {};
+  let basketB = {};
+  let isBasketAEmpty = true;
+  let isBasketBEmpty = true;
   let maxFruits = -Infinity;
+  let runningSum = 0;
+  let dFruits = 0;
+  let windowStartIdx = 0;
 
-  // Generate Possible SubArray
-  // for (let i = 0; i < fruits.length; i++) {
-  //   // Keep it 2 - Problem Constiants
-  //   let dChar = 0;
-  //   let subArrSum = 0;
-  //   let dMap = {};
+  for (let windowEndIdx = 0; windowEndIdx < fruits.length; windowEndIdx++) {
+    if (isBasketAEmpty) {
+      basketA = {
+        type: fruits[windowEndIdx],
+        count: 1
+      };
+      isBasketAEmpty = false;
+      dFruits += 1;
+      runningSum += 1;
 
-  //   dChar += 1;
-  //   dMap[fruits[i]] = 1;
-  //   subArrSum += 1;
-  //   maxFruits = Math.max(maxFruits, subArrSum);
-  //   for (let j = i + 1; j < fruits.length; j++) {
-  //     if (dMap[fruits[j]]) {
-  //       //Already There
-  //       dMap[fruits[j]] += 1;
-  //       subArrSum += 1;
-  //     } else {
-  //       dMap[fruits[j]] = 1;
-  //       dChar += 1;
-  //       subArrSum += 1;
-  //     }
-  //     if (dChar <= 2) {
-  //       maxFruits = Math.max(maxFruits, subArrSum);
-  //     }
-  //     if (dChar > 2) {
-  //       break;
-  //     }
-  //   }
-  // }
-  // return maxFruits;
+      maxFruits = Math.max(maxFruits, runningSum);
+    } else if (basketA.type === fruits[windowEndIdx]) {
+      basketA.count += 1;
+      runningSum += 1;
+
+      maxFruits = Math.max(maxFruits, runningSum);
+    } else if (isBasketBEmpty) {
+      basketB = {
+        type: fruits[windowEndIdx],
+        count: 1
+      };
+      dFruits += 1;
+      isBasketBEmpty = false;
+      runningSum += 1;
+
+      maxFruits = Math.max(maxFruits, runningSum);
+    } else if (basketB.type === fruits[windowEndIdx]) {
+      basketB.count += 1;
+      runningSum += 1;
+
+      maxFruits = Math.max(maxFruits, runningSum);
+    } else {
+      maxFruits = Math.max(maxFruits, runningSum);
+      dFruits += 1;
+      runningSum += 1;
+    }
+
+    // Shrink Window From Left
+    while (dFruits > 2) {
+      runningSum -= 1;
+
+      // Remove The Fruit From Basket
+      if (basketA.type === fruits[windowStartIdx]) {
+        if (basketA.count === 1) {
+          basketA = { type: fruits[windowEndIdx], count: 1 };
+          // isBasketAEmpty = true;
+          dFruits -= 1;
+        } else {
+          basketA.count -= 1;
+        }
+      } else if (basketB.type === fruits[windowStartIdx]) {
+        if (basketB.count === 1) {
+          basketB = { type: fruits[windowEndIdx], count: 1 };
+          // isBasketBEmpty = true;
+          dFruits -= 1;
+        } else {
+          basketB.count -= 1;
+        }
+      }
+      windowStartIdx += 1;
+    }
+  }
+
+  return maxFruits;
 }
-console.log(totalFruit([3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4])); //5
-console.log(totalFruit([1, 2, 1])); //3,We can pick from all 3 trees.
-console.log(totalFruit([0, 1, 2, 2])); //3,We can pick from trees [1,2,2].If we had started at the first tree, we would only pick from trees [0,1].
-console.log(totalFruit([1, 2, 3, 2, 2])); //4,We can pick from trees [2,3,2,2]. If we had started at the first tree, we would only pick from trees [1,2].
+
+function isUnique(s) {
+  // Return True - if all character in string is unique else return false;
+  let strArr = [];
+  for (let i = 0; i < s.length; i++) {
+    let char = s[i];
+    if (strArr.includes(char)) {
+      return false;
+    } else {
+      strArr.push(char);
+    }
+  }
+  return true;
+}
+
+// isUnique("aba");
+// isUnique("ab");
+// isUnique("abcdrf");
+// isUnique("abcdefe");
+function nonRepeatSubstring(s) {
+  let maxLength = -Infinity;
+  let isAny = false;
+  for (let i = 0; i < s.length; i++) {
+    let subStr = s[i];
+    isAny = true;
+    maxLength = Math.max(maxLength, subStr.length);
+    for (let j = i + 1; j < s.length; j++) {
+      subStr += [s[j]];
+      if (isUnique(subStr)) {
+        maxLength = Math.max(maxLength, subStr.length);
+      } else break;
+    }
+  }
+  return isAny ? maxLength : 0;
+}
+
+// console.log(nonRepeatSubstring("aabccbb")); //3
+// console.log(nonRepeatSubstring("abbbb")); //2
+// console.log(nonRepeatSubstring("abccde")); //3
