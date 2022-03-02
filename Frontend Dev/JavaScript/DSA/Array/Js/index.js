@@ -421,3 +421,40 @@ function nonRepeatSubstring(s) {
 // console.log(nonRepeatSubstring("aabccbb")); //3
 // console.log(nonRepeatSubstring("abbbb")); //2
 // console.log(nonRepeatSubstring("abccde")); //3
+function lengthOfLongestSubstring(s) {
+  let charMap = {};
+  let windowStartIdx = 0;
+  let maxLength = -Infinity;
+  let subStr = "";
+
+  for (let windowEndIdx = 0; windowEndIdx < s.length; windowEndIdx++) {
+    let char = s[windowEndIdx];
+    subStr += char;
+
+    //  if char exist before
+    if (charMap[char]) {
+      charMap[char] += 1;
+      while (charMap[char] !== 1) {
+        subStr = subStr.slice(1);
+        let firstWindowChar = s[windowStartIdx];
+        if (charMap[firstWindowChar] === 1) {
+          delete charMap[firstWindowChar];
+        } else {
+          charMap[char] -= 1;
+        }
+        windowStartIdx += 1;
+      }
+    } else {
+      charMap[char] = 1;
+    }
+    maxLength = Math.max(maxLength, subStr.length);
+  }
+  return maxLength;
+}
+
+// console.log(lengthOfLongestSubstring("aabccbb")); //3
+// console.log(lengthOfLongestSubstring("abbbb")); //2
+// console.log(lengthOfLongestSubstring("abccde")); //3
+var longestOnes = function (nums, k) {
+
+};
