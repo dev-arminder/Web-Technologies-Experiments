@@ -54,6 +54,36 @@ let arr3 = [-2, 2, 0, 2, 5, 2, 0];
 // InsertionSort(arr2);
 // InsertionSort(arr3);
 
-SelectionSort(arr1);
-SelectionSort(arr2);
-SelectionSort(arr3);
+// function partition(arr, low, high){
+//   let pivotIdx = high;
+//   let pivotElementIdx = 0;
+
+// }
+
+function partition(arr, low, high) {
+  let pivotElement = high;
+  let leftIdx = 0;
+  while (arr[leftIdx] <= arr[pivotElement]) {
+    leftIdx += 1;
+  }
+  for (let rightIdx = leftIdx + 1; rightIdx < high; rightIdx++) {
+    if (arr[rightIdx] < arr[pivotElement]) {
+      [arr[leftIdx], arr[rightIdx]] = [arr[rightIdx], arr[leftIdx]];
+      leftIdx += 1;
+    }
+  }
+
+  [arr[leftIdx], arr[pivotElement]] = [arr[pivotElement], arr[leftIdx]];
+  return leftIdx;
+}
+
+function QuickSort(arr, startIdx, endIdx) {
+  // Base Case
+  if (endIdx <= startIdx) return;
+  let pivotPosition = partition(arr, startIdx, endIdx);
+  QuickSort(arr, startIdx, pivotPosition - 1);
+  QuickSort(arr, pivotPosition + 1, endIdx);
+  // return pivotPosition;
+  return arr;
+}
+QuickSort(arr1, 0, arr1.length - 1);
